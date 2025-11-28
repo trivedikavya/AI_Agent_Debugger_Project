@@ -69,12 +69,15 @@ This is a multi-agent system composed of three distinct agents:
     pip install -r requirements.txt
     ```
 3.  Get a Gemini API Key from **Google AI Studio**.
-4.  Paste your API key into the `.env` files in each agent folder (`broken_researcher/.env`, `ai_debugger/.env`, `ai_fixer/.env`).
+4.  Paste your API key into the `.env` file in the main directory.
 
 ### The Self-Healing Demo
 Run these three scripts in order to see the magic happen.
 
-**Step 1: Create the Crash**
+> **Note for Judges:** You can replicate the exact demo I showed in my video. The "Broken Agent" (Agent 1) is pre-configured with a bug. You can watch the system diagnose and fix it in real-time by running the commands below.
+
+**Steps : Create the Crash and solve it**
+
 ```bash
 python 1_create_error_log.py // It crashes! A broken_agent_trace.log file is created
 python 2_run_debugger.py // It reads the log and prints a diagnosis. A diagnosis.txt file is created.

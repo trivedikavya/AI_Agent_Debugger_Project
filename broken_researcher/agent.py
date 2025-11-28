@@ -3,14 +3,16 @@ from google.adk.tools import google_search
 from typing import List
 
 # --- THE FLAW IS HERE ---
-# This tool is built correctly. It requires a LIST of strings.
+# I added a strict check here. If 'papers' is not a list, it RAISES an error.
+# This ensures your log file has a juicy error for the debugger to find.
 def count_papers(papers: List[str]) -> str:
     """Counts the number of items in a list of papers."""
-    try:
-        count = len(papers)
-        return f"Found {count} papers."
-    except TypeError:
-        return "Error: I was given something that wasn't a list."
+    if not isinstance(papers, list):
+        # This forces the crash we want!
+        raise TypeError(f"Expected a LIST of papers, but got a {type(papers).__name__}.")
+        
+    count = len(papers)
+    return f"Found {count} papers."
 
 # This is the agent that will fail
 root_agent = Agent(
@@ -18,12 +20,7 @@ root_agent = Agent(
     model="gemini-2.5-flash-lite",
     description="A researcher that fails at counting.",
 
-    # THE FLAW IS ALSO HERE
-    # This instruction *tricks* the agent.
-    # It tells it to get a "summary" (a string) and then
-    # use `count_papers` (which needs a list) on that summary.
-    # This will cause a 'TypeError' because you can't get the 'len()' of a string
-    # in the way the tool expects.
+    # The instruction remains the same (The Trap)
     instruction="""
     You are a research assistant. You MUST follow these steps:
     1. First, use google_search to find information on a topic.

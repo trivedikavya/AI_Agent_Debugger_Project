@@ -79,7 +79,7 @@ Run these three scripts in order to see the magic happen.
 **Steps : Create the Crash and solve it**
 
 ```bash
-python 1_create_error_log.py // It crashes! A broken_agent_trace.log file is created
-python 2_run_debugger.py // It reads the log and prints a diagnosis. A diagnosis.txt file is created.
-python 3_run_fixer.py // It reads the diagnosis, edits broken_researcher/agent.py, and fixes the bug. You can now run Step 1 again, and it will succeed!
+python 1_create_error_log.py 
+python 2_run_debugger.py 
+python 3_run_fixer.py  
 ```

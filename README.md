@@ -1,4 +1,4 @@
-# 🚀 AI Agent Mechanic: The Self-Healing AI System
+# 🚀 The Self-Healing AI Agent System
 **A Capstone Project for the 5-Day AI Agents Intensive Course.**
 
 **Track:** Freestyle

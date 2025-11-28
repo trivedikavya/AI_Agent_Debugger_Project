@@ -1,123 +1,82 @@
-# 🚀 AI Agent Mechanic: The AI Agent Debugger
-A Capstone Project for the 5-Day AI Agents Intensive Course.
+# 🚀 AI Agent Mechanic: The Self-Healing AI System
+**A Capstone Project for the 5-Day AI Agents Intensive Course.**
 
 **Track:** Freestyle
 
 ---
 
-### 1. The Pitch: Problem, Solution, Value
+## 1. The Pitch: Problem, Solution, Value
 
-**The Problem (The "Why"):**
-AI Agents are powerful, but when they fail, they are a "black box." They produce long, messy, and technical trace logs that are difficult for developers to parse and impossible for non-technical users to understand. This makes debugging slow and frustrating.
+### **The Problem (The "Why")**
+AI Agents are powerful, but when they fail, they are a "black box." They produce long, messy, and technical trace logs that are difficult for developers to parse and impossible for non-technical users to understand. Even worse, fixing these bugs requires manual intervention, slowing down development cycles.
 
-**The Solution (The "What"):**
-This project is an **"AI Agent Mechanic"**—an AI agent whose sole purpose is to debug *other* agents.
+### **The Solution (The "What")**
+This project is an **"AI Agent Mechanic"**—a fully autonomous, self-healing multi-agent system.
 
-It works in two steps:
-1.  A "Broken Agent" (`broken_researcher`) is run, which intentionally fails and produces a messy `broken_agent_trace.log` file.
-2.  The "AI Mechanic Agent" (`ai_debugger`) is then run. It reads this log file, analyzes the complex error trace, and produces a simple, plain-English diagnosis of the *root cause* of the failure.
+It works in three phases:
+1.  **Crash:** A "Broken Agent" runs and fails, producing a messy technical log.
+2.  **Diagnose:** The "AI Mechanic" reads the log, analyzes the error, and writes a simple English diagnosis.
+3.  **Heal:** The "AI Surgeon" reads the diagnosis, opens the actual source code of the broken agent, and **rewrites the code to fix the bug automatically.**
 
-**The Value (The "Impact"):**
-This agent turns a 30-minute debugging nightmare into a 3-second diagnosis.
-* **For Developers:** Massively speeds up debugging.
-* **For Teams:** Allows non-technical product managers to understand *why* an agent failed, improving communication.
-* **For the Future:** This "agent-watching-agent" pattern is a key step towards building self-healing agent systems.
-
----
-
-### 2. The Implementation: Architecture & Code
-
-#### Architecture
-This project is a multi-agent system composed of two agents and two scripts:
-
-
-
-[Image of a simple architecture diagram]
-
-*(You can create a simple diagram using any free tool and add it here. A simple `[Agent A] -> [Log File] -> [Agent B] -> [Answer]` is perfect.)*
-
-1.  **`broken_researcher` (Agent A):** A simple agent that is *designed to fail*. Its `count_papers` tool requires a `list`, but its instructions trick it into passing a `string`.
-2.  **`1_create_error_log.py`:** This script runs Agent A and uses the `LoggingPlugin` (from Day 4a) to capture its full, messy trace log and save it to `broken_agent_trace.log`.
-3.  **`ai_debugger` (Agent B):** This is the core of the project. It is an "AI Mechanic" with two custom tools:
-    * `read_log_file(path)`: Reads the log file from disk.
-    * `find_last_error_in_trace(content)`: Uses Regex to find the *exact* failing tool call in the log.
-4.  **`2_run_debugger.py`:** This script runs Agent B and gives it the log file. Agent B uses its tools and LLM brain to provide a simple, one-paragraph diagnosis of the problem.
-
-#### Key Course Concepts Used (Over 3!)
-* **[✅] Multi-agent System:** We use two distinct agents (`broken_researcher` and `ai_debugger`) that interact (indirectly) via a log file.
-* **[✅] Custom Tools:** The `ai_debugger` is built on two custom-made tools: `read_log_file` and `find_last_error_in_trace`.
-* **[✅] Observability (Logging/Tracing):** This entire project is an *application* of observability. We use the `LoggingPlugin` to create a trace and then build a new agent to analyze that trace.
-* **[✅] Bonus: Agent Deployment:** The `ai_debugger` agent is packaged for and deployed to **Vertex AI Agent Engine** to earn the deployment bonus point.
+### **The Value (The "Impact")**
+This turns a 30-minute debugging session into a 10-second autonomous fix.
+* **For Developers:** Massively speeds up debugging and repair.
+* **For Teams:** Allows non-technical stakeholders to understand failures.
+* **For the Future:** Demonstrates the potential for self-maintaining AI software.
 
 ---
 
-### 3. How to Run This Project
+## 2. The Implementation: Architecture & Code
 
-**Setup:**
+### Architecture Diagram
+![AI Agent Mechanic Architecture](image.png)
+
+### System Components
+This is a multi-agent system composed of three distinct agents:
+
+1.  **Agent A: `broken_researcher` (The Patient)**
+    * **Role:** A simple researcher agent designed with a flaw. Its `count_papers` tool requires a `List`, but its instructions trick it into passing a `String`.
+    * **Output:** Generates a messy `broken_agent_trace.log` file upon failure.
+
+2.  **Agent B: `ai_debugger` (The Doctor)**
+    * **Role:** An observability agent.
+    * **Custom Tools:**
+        * `read_log_file`: Reads the raw trace logs.
+        * `find_last_error_in_trace`: Uses Regex to pinpoint the exact failure point.
+    * **Output:** Generates a `diagnosis.txt` file explaining the root cause in plain English.
+
+3.  **Agent C: `ai_fixer` (The Surgeon)**
+    * **Role:** A software engineering agent capable of modifying files.
+    * **Custom Tools:**
+        * `read_code_file`: Reads the broken source code.
+        * `apply_fix_to_file`: Overwrites the file with corrected code.
+    * **Output:** A repaired `agent.py` file that runs successfully.
+
+### Key Course Concepts Applied (4+)
+* **[✅] Multi-agent System:** Three distinct agents collaborating asynchronously via files (Logs -> Diagnosis -> Code).
+* **[✅] Custom Tools:** Built 4 custom tools for file reading, log parsing, and code editing.
+* **[✅] Observability:** Leveraged the `LoggingPlugin` to capture traces and built an agent specifically to analyze those traces.
+* **[✅] Agent Deployment:** The `ai_debugger` agent is configured for deployment to **Vertex AI Agent Engine**.
+
+---
+
+## 3. How to Run This Project
+
+### Prerequisites
 1.  Clone this repository.
-2.  Install the required libraries: `pip install -r requirements.txt`
+2.  Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
 3.  Get a Gemini API Key from **Google AI Studio**.
-4.  Paste your API key into *both* of these files:
-    * `broken_researcher/.env`
-    * `ai_debugger/.env`
+4.  Paste your API key into the `.env` files in each agent folder (`broken_researcher/.env`, `ai_debugger/.env`, `ai_fixer/.env`).
 
-**Demo:**
-To run the full demo, just run the two main scripts in order:
+### The Self-Healing Demo
+Run these three scripts in order to see the magic happen.
 
-**Step 1: Create the error log**
+**Step 1: Create the Crash**
 ```bash
-python 1_create_error_log.py
-python 2_run_debugger.py
+python 1_create_error_log.py // It crashes! A broken_agent_trace.log file is created
+python 2_run_debugger.py // It reads the log and prints a diagnosis. A diagnosis.txt file is created.
+python 3_run_fixer.py // It reads the diagnosis, edits broken_researcher/agent.py, and fixes the bug. You can now run Step 1 again, and it will succeed!
 ```
-### 4. Bonus: Deployed Agent (Vertex AI)
-
-To demonstrate production readiness, the `ai_debugger` agent has been deployed to **Vertex AI Agent Engine**.
-
-**Deployment Command Used:**
-```bash
-adk deploy agent_engine \
-  --project="[YOUR_PROJECT_ID]" \
-  --region="us-central1" \
-  ai_debugger
-``` 
-
-
----
-
-### 🎥 Step 6: Your 3-Minute Video Script (Worth 10 Points)
-
-You need a video to win. It doesn't need to be Hollywood quality; it just needs to be clear. Use a free screen recorder (like Loom or OBS).
-
-**Script & Plan:**
-
-**0:00 - 0:45: The Pitch (Face camera or slides)**
-* **Say:** "Hi, I'm [Your Name]. We've all been there: you're building an AI agent, it fails, and you're left staring at a 500-line trace log that looks like gibberish. Debugging agents is hard, slow, and frustrating."
-* **Say:** "For my Capstone Project, I built the **AI Agent Mechanic**. It's an AI agent that debugs *other* agents. It reads those messy log files and tells you, in plain English, exactly why your agent failed."
-
-**0:45 - 2:00: The Demo (Screen recording of your code)**
-* **Action:** Show your terminal.
-* **Say:** "First, let's look at my 'Broken Researcher' agent. It has a bug in its code."
-* **Action:** Run `python 1_create_error_log.py`.
-* **Say:** "I'm running the broken agent. As expected, it fails. And look at this log file it created..."
-* **Action:** Open `broken_agent_trace.log` and scroll through it quickly.
-* **Say:** "This is a nightmare to read. But now, let's call the Mechanic."
-* **Action:** Run `python 2_run_debugger.py`.
-* **Say:** "I'm running my AI Debugger. It's reading that log file, analyzing the trace, and..."
-* **Action:** Point to the final simple English output in the terminal.
-* **Say:** "Boom. It tells me exactly what happened: 'The agent failed because it passed a string to a tool that required a list.' Problem solved."
-
-**2:00 - 3:00: The Architecture (Show a diagram or your `README.md`)**
-* **Action:** Show your Architecture Diagram.
-* **Say:** "This is a multi-agent system. Agent A generates the logs, and Agent B—the Debugger—uses **custom tools** I built to parse those logs using Regex. It demonstrates **Observability**, **Tool Creation**, and **Long-term Memory** concepts from the course."
-* **Say:** "I've also deployed the debugger to Vertex AI Agent Engine using the ADK CLI. Thanks for watching!"
-
----
-
-### ✅ Final Checklist Before Submitting
-
-1.  **Test Locally:** Make sure `python 1_create_error_log.py` and `python 2_run_debugger.py` work perfectly on your machine.
-2.  **Clean Up:** Make sure you **DO NOT** upload your `.env` files to GitHub. Your `.gitignore` should prevent this, but double-check.
-3.  **Record Video:** Record it, upload to YouTube, and put the link in the `README.md` and the submission form.
-4.  **Submit:** Go to the Kaggle competition page and submit your GitHub link and Video link.
-
-You have the folder structure, the code, the API setup, the deployment instructions, the documentation, and the video script. **You are ready to build a winning project.** Good luck! 🚀

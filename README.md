@@ -69,3 +69,55 @@ To run the full demo, just run the two main scripts in order:
 python 1_create_error_log.py
 python 2_run_debugger.py
 ```
+### 4. Bonus: Deployed Agent (Vertex AI)
+
+To demonstrate production readiness, the `ai_debugger` agent has been deployed to **Vertex AI Agent Engine**.
+
+**Deployment Command Used:**
+```bash
+adk deploy agent_engine \
+  --project="[YOUR_PROJECT_ID]" \
+  --region="us-central1" \
+  ai_debugger
+``` 
+
+
+---
+
+### 🎥 Step 6: Your 3-Minute Video Script (Worth 10 Points)
+
+You need a video to win. It doesn't need to be Hollywood quality; it just needs to be clear. Use a free screen recorder (like Loom or OBS).
+
+**Script & Plan:**
+
+**0:00 - 0:45: The Pitch (Face camera or slides)**
+* **Say:** "Hi, I'm [Your Name]. We've all been there: you're building an AI agent, it fails, and you're left staring at a 500-line trace log that looks like gibberish. Debugging agents is hard, slow, and frustrating."
+* **Say:** "For my Capstone Project, I built the **AI Agent Mechanic**. It's an AI agent that debugs *other* agents. It reads those messy log files and tells you, in plain English, exactly why your agent failed."
+
+**0:45 - 2:00: The Demo (Screen recording of your code)**
+* **Action:** Show your terminal.
+* **Say:** "First, let's look at my 'Broken Researcher' agent. It has a bug in its code."
+* **Action:** Run `python 1_create_error_log.py`.
+* **Say:** "I'm running the broken agent. As expected, it fails. And look at this log file it created..."
+* **Action:** Open `broken_agent_trace.log` and scroll through it quickly.
+* **Say:** "This is a nightmare to read. But now, let's call the Mechanic."
+* **Action:** Run `python 2_run_debugger.py`.
+* **Say:** "I'm running my AI Debugger. It's reading that log file, analyzing the trace, and..."
+* **Action:** Point to the final simple English output in the terminal.
+* **Say:** "Boom. It tells me exactly what happened: 'The agent failed because it passed a string to a tool that required a list.' Problem solved."
+
+**2:00 - 3:00: The Architecture (Show a diagram or your `README.md`)**
+* **Action:** Show your Architecture Diagram.
+* **Say:** "This is a multi-agent system. Agent A generates the logs, and Agent B—the Debugger—uses **custom tools** I built to parse those logs using Regex. It demonstrates **Observability**, **Tool Creation**, and **Long-term Memory** concepts from the course."
+* **Say:** "I've also deployed the debugger to Vertex AI Agent Engine using the ADK CLI. Thanks for watching!"
+
+---
+
+### ✅ Final Checklist Before Submitting
+
+1.  **Test Locally:** Make sure `python 1_create_error_log.py` and `python 2_run_debugger.py` work perfectly on your machine.
+2.  **Clean Up:** Make sure you **DO NOT** upload your `.env` files to GitHub. Your `.gitignore` should prevent this, but double-check.
+3.  **Record Video:** Record it, upload to YouTube, and put the link in the `README.md` and the submission form.
+4.  **Submit:** Go to the Kaggle competition page and submit your GitHub link and Video link.
+
+You have the folder structure, the code, the API setup, the deployment instructions, the documentation, and the video script. **You are ready to build a winning project.** Good luck! 🚀

@@ -69,7 +69,7 @@ This is a multi-agent system composed of three distinct agents:
     pip install -r requirements.txt
     ```
 3.  Get a Gemini API Key from **Google AI Studio**.
-4.  Paste your API key into the `.env` file in the main directory.
+4.  Paste your API key into the `.env` file in the main directory and agent directory.
 
 ### The Self-Healing Demo
 Run these three scripts in order to see the magic happen.
